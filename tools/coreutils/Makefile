@@ -8,15 +8,15 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=coreutils
 PKG_CPE_ID:=cpe:/a:gnu:coreutils
-PKG_VERSION:=8.27
+PKG_VERSION:=9.3
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=@GNU/coreutils
-PKG_HASH:=8891d349ee87b9ff7870f52b6d9312a9db672d2439d289bc57084771ca21656b
+PKG_HASH:=adbcfcfe899235b71e8768dcf07cd532520b7f54f9a8064843f8d199a904bbaa
 
 HOST_BUILD_PARALLEL := 1
 
-BUILD_PROGRAMS = date readlink touch
+BUILD_PROGRAMS = date readlink touch ln chown ginstall
 
 include $(INCLUDE_DIR)/host-build.mk
 
@@ -31,7 +31,13 @@ HOST_MAKE_FLAGS += \
 
 define Host/Install
 	$(INSTALL_DIR) $(1)/bin
-	$(CP) $(patsubst %,$(HOST_BUILD_DIR)/%,$(BUILD_BINS)) $(1)/bin/
+	$(INSTALL_BIN) $(patsubst %,$(HOST_BUILD_DIR)/%,$(BUILD_BINS)) $(1)/bin/
+	ln -sf ginstall $(1)/bin/install
+endef
+
+define Host/Uninstall
+	rm -f $(STAGING_DIR_HOST)/bin/install
+	-$(call Host/Compile/Default,uninstall)
 endef
 
 $(eval $(call HostBuild))

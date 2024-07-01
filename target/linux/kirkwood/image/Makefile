@@ -1,9 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
 # Copyright (C) 2009-2013 OpenWrt.org
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
 
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/image.mk
@@ -12,8 +9,7 @@ KERNEL_LOADADDR:=0x8000
 
 define Device/dsa-migration
   DEVICE_COMPAT_VERSION := 1.1
-  DEVICE_COMPAT_MESSAGE := Config cannot be migrated from swconfig to DSA \
-	(early adopters with DSA already set up may just force-flash keeping existing config)
+  DEVICE_COMPAT_MESSAGE := Config cannot be migrated from swconfig to DSA
 endef
 
 define Device/Default
@@ -31,7 +27,6 @@ define Device/Default
   IMAGES := sysupgrade.bin factory.bin
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
   IMAGE/factory.bin := append-ubi
-  SUPPORTED_DEVICES = $(subst _,$(comma),$(1))
 endef
 
 define Device/checkpoint_l-50
@@ -71,6 +66,13 @@ define Device/cloudengines_pogoplugv4
 	kmod-gpio-button-hotplug
 endef
 TARGET_DEVICES += cloudengines_pogoplugv4
+
+define Device/globalscale_sheevaplug
+  DEVICE_VENDOR := Globalscale
+  DEVICE_MODEL := Sheevaplug
+  DEVICE_PACKAGES := kmod-mvsdio
+endef
+TARGET_DEVICES += globalscale_sheevaplug
 
 define Device/iom_iconnect-1.1
   DEVICE_VENDOR := Iomega
@@ -137,6 +139,15 @@ define Device/linksys_ea4500
 endef
 TARGET_DEVICES += linksys_ea4500
 
+define Device/Prafly_m8621t
+  DEVICE_VENDOR := Prafly
+  DEVICE_MODEL := m8621t
+  DEVICE_PACKAGES := kmod-ata-marvell-sata kmod-fs-ext4 kmod-switch-mvswe61xxx kmod-ata-core kmod-mmc kmod-mvsdio kmod-usb2
+  KERNEL_INSTALL := 1
+  SUPPORTED_DEVICES += m8621t
+endef
+TARGET_DEVICES += Prafly_m8621t
+
 define Device/raidsonic_ib-nas62x0
   DEVICE_VENDOR := RaidSonic
   DEVICE_MODEL := ICY BOX IB-NAS62x0
@@ -145,6 +156,18 @@ define Device/raidsonic_ib-nas62x0
   SUPPORTED_DEVICES += ib62x0
 endef
 TARGET_DEVICES += raidsonic_ib-nas62x0
+
+define Device/seagate_blackarmor-nas220
+  DEVICE_VENDOR := Seagate
+  DEVICE_MODEL := Blackarmor NAS220
+  DEVICE_PACKAGES := kmod-hwmon-adt7475 kmod-fs-ext4 kmod-ata-marvell-sata \
+	mdadm kmod-gpio-button-hotplug
+  PAGESIZE := 512
+  SUBPAGESIZE := 256
+  BLOCKSIZE := 16k
+  UBINIZE_OPTS := -e 1
+endef
+TARGET_DEVICES += seagate_blackarmor-nas220
 
 define Device/seagate_dockstar
   DEVICE_VENDOR := Seagate
@@ -168,6 +191,16 @@ define Device/seagate_goflexhome
   SUPPORTED_DEVICES += goflexhome
 endef
 TARGET_DEVICES += seagate_goflexhome
+
+define Device/surfilter_net110
+  DEVICE_VENDOR := Surfilter
+  DEVICE_MODEL := Net110-88F6281
+  DEVICE_PACKAGES := kmod-ata-marvell-sata kmod-fs-ext4 kmod-switch-mv88e6xxx kmod-ata-core \
+	  kmod-mmc kmod-mvsdio kmod-rt2800-pci kmod-usb2 kmod-usb-ledtrig-usbport kmod-gpio-button-hotplug
+  KERNEL_INSTALL := 1
+  SUPPORTED_DEVICES += net110-88F6281
+endef
+TARGET_DEVICES += surfilter_net110
 
 define Device/zyxel_nsa310b
   DEVICE_VENDOR := ZyXEL

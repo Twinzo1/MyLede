@@ -8,8 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=map
-PKG_VERSION:=4
-PKG_RELEASE:=13
+PKG_RELEASE:=7
 PKG_LICENSE:=GPL-2.0
 
 include $(INCLUDE_DIR)/package.mk
@@ -18,7 +17,7 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/map
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=@IPV6 +kmod-ip6-tunnel +libubox +libubus +iptables-mod-conntrack-extra +kmod-nat46
+  DEPENDS:=@IPV6 +kmod-ip6-tunnel +libubox +libubus +kmod-nat46 
   TITLE:=MAP-E/MAP-T and Lightweight 4over6 configuration support
   MAINTAINER:=Hans Dedecker <dedeckeh@gmail.com>
   PROVIDES:=map-t

@@ -19,7 +19,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/drivers/net/dsa/mv88e6xxx/chip.c
 +++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -2378,7 +2378,14 @@ static int mv88e6xxx_setup_upstream_port
+@@ -2394,7 +2394,14 @@ static int mv88e6xxx_setup_upstream_port
  
  		if (chip->info->ops->set_egress_port) {
  			err = chip->info->ops->set_egress_port(chip,
@@ -49,7 +49,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  enum mv88e6xxx_frame_mode {
  	MV88E6XXX_FRAME_MODE_NORMAL,
  	MV88E6XXX_FRAME_MODE_DSA,
-@@ -464,7 +469,9 @@ struct mv88e6xxx_ops {
+@@ -465,7 +470,9 @@ struct mv88e6xxx_ops {
  	int (*stats_get_stats)(struct mv88e6xxx_chip *chip,  int port,
  			       uint64_t *data);
  	int (*set_cpu_port)(struct mv88e6xxx_chip *chip, int port);
